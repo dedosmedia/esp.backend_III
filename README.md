@@ -5,4 +5,4 @@ Este repo contiene los ejercicios prácticos de las clases de Especialización e
 Lenguaje de programación: Go
 
 
-### Clase 1:  Sintaxis de go
+### [Clase 1:  Sintaxis de go](https://github.com/dedosmedia/esp.backend_III/tree/main/clase_1)
