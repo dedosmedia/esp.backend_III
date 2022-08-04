@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/media/diego/DATA/DH/Esp.Back_III/clase_1'
+go version
+make: Leaving directory '/media/diego/DATA/DH/Esp.Back_III/clase_1'
+ 
