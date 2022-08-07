@@ -10,3 +10,5 @@ Lenguaje de programación: Go
 ### [Clase 2:  Sintaxis de go (funciones, for)](https://github.com/dedosmedia/esp.backend_III/tree/main/clase_2)
 
 ### [Clase 4:  Estructuras y métodos](https://github.com/dedosmedia/esp.backend_III/tree/main/clase_4)
+
+### [Clase 5:  Composición, punteros e interfaces](https://github.com/dedosmedia/esp.backend_III/tree/main/clase_5)
