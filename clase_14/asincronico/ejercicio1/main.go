@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -21,14 +22,19 @@ func init() {
 
 func main() {
 
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("unexpected error", err)
+		}
+	}()
+
 	router := gin.Default()
 
 	router.GET("/", func(ctx *gin.Context) {
-		ctx.String(http.StatusOK, "Bienvenido a la empresa Gophers!")
+		ctx.JSON(http.StatusOK, gin.H{"msg": "Bienvenido a la empresa Gophers!"})
 	})
 
 	router.GET("/employees", func(ctx *gin.Context) {
-
 		ctx.JSON(http.StatusOK, gin.H{
 			"empleados": empleados,
 		})
@@ -39,7 +45,10 @@ func main() {
 		idString := ctx.Param("id")
 		id, err := strconv.Atoi(idString)
 		if err != nil {
-			panic(err)
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("invalid id %s", idString),
+			})
+			return
 		}
 
 		for _, v := range empleados {
@@ -50,7 +59,9 @@ func main() {
 				return
 			}
 		}
-		ctx.String(http.StatusNotFound, "No se encuentra un usuario con id: %s ", idString)
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"error": fmt.Sprintf("user not found with id %s", idString),
+		})
 	})
 
 	router.GET("/employeesparams/:id/:nombre/:activo", func(ctx *gin.Context) {
@@ -61,12 +72,18 @@ func main() {
 
 		id, err := strconv.Atoi(idString)
 		if err != nil {
-			panic(err)
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("invalid id %s", idString),
+			})
+			return
 		}
 
 		activo, err := strconv.ParseBool(activoString)
 		if err != nil {
-			panic(err)
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("invalid activo %s", activoString),
+			})
+			return
 		}
 
 		e := Empleados{

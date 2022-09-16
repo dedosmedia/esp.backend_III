@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -21,32 +22,50 @@ var productos []Producto
 
 func main() {
 
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("unexpected error ", err)
+		}
+	}()
+
 	router := gin.Default()
 
 	router.GET("/productparams", func(ctx *gin.Context) {
 		idS := ctx.Query("id")
 		id, err := strconv.ParseInt(idS, 10, 0)
 		if err != nil {
-			panic(err)
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("invalid id %s", idS),
+			})
+			return
 		}
 
 		name := ctx.Query("name")
 		quantityS := ctx.Query("quantity")
 		quantity, err := strconv.ParseInt(quantityS, 10, 64)
 		if err != nil {
-			panic(err)
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("invalid quantity %s", quantityS),
+			})
+			return
 		}
 		code := ctx.Query("code_value")
 		publishedS := ctx.Query("is_published")
 		published, err := strconv.ParseBool(publishedS)
 		if err != nil {
-			panic(err)
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("invalid is_published %s", publishedS),
+			})
+			return
 		}
 		expiration := ctx.Query("expiration")
 		priceS := ctx.Query("price")
 		price, err := strconv.ParseFloat(priceS, 64)
 		if err != nil {
-			panic(err)
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("invalid price %s", priceS),
+			})
+			return
 		}
 		p := Producto{
 			Id:         int(id),
@@ -70,7 +89,10 @@ func main() {
 
 		id, err := strconv.ParseInt(idS, 10, 0)
 		if err != nil {
-			panic(err)
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("invalid id %s", idS),
+			})
+			return
 		}
 
 		ps := filter(productos, func(p Producto) bool {
@@ -80,7 +102,9 @@ func main() {
 		if len(ps) > 1 {
 			ctx.JSON(http.StatusOK, ps[0])
 		} else {
-			ctx.String(http.StatusNotFound, "No hay un producto con id %s", idS)
+			ctx.JSON(http.StatusNotFound, gin.H{
+				"error": fmt.Sprintf("No hay productos con id %s", idS),
+			})
 		}
 
 	})
@@ -90,12 +114,18 @@ func main() {
 		minS := ctx.Query("min")
 		min, err := strconv.ParseInt(minS, 10, 0)
 		if err != nil {
-			panic(err)
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("invalid min %s", minS),
+			})
+			return
 		}
 		maxS := ctx.Query("max")
 		max, err := strconv.ParseInt(maxS, 10, 0)
 		if err != nil {
-			panic(err)
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("invalid max %s", maxS),
+			})
+			return
 		}
 
 		ps := filter(productos, func(p Producto) bool {
@@ -113,7 +143,10 @@ func main() {
 		amountS := ctx.Param("amount")
 		amount, err := strconv.ParseInt(amountS, 10, 0)
 		if err != nil {
-			panic(err)
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("invalid amount %s", amountS),
+			})
+			return
 		}
 
 		ps := filter(productos, func(p Producto) bool {
@@ -123,7 +156,10 @@ func main() {
 		if len(ps) > 0 {
 			total = ps[0].Price * float64(amount)
 		} else {
-			ctx.String(http.StatusNotFound, "No se encuentra el producto con code: %s", code)
+
+			ctx.JSON(http.StatusNotFound, gin.H{
+				"error": fmt.Sprintf("product not found with code %s", code),
+			})
 			return
 		}
 
