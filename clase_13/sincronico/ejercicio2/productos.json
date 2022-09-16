@@ -1,0 +1,55 @@
+[{
+    "Id": 1,
+	"Nombre": "N1",
+	"Precio": 50,
+	"Stock": 3,
+	"Codigo": 156,
+	"Publicado": false,
+	"FechaDeCreacion": "2021"
+},
+{
+    "Id": 2,
+	"Nombre": "N2",
+	"Precio": 51,
+	"Stock": 4,
+	"Codigo": 157,
+	"Publicado": false,
+	"FechaDeCreacion": "2021"
+},
+{
+    "Id": 3,
+	"Nombre": "N3",
+	"Precio": 52,
+	"Stock": 5,
+	"Codigo": 158,
+	"Publicado": false,
+	"FechaDeCreacion": "2021"
+},
+{
+    "Id": 4,
+	"Nombre": "N4",
+	"Precio": 53,
+	"Stock": 6,
+	"Codigo": 158,
+	"Publicado": false,
+	"FechaDeCreacion": "2021"
+},
+{
+    "Id": 5,
+	"Nombre": "N5",
+	"Precio": 55,
+	"Stock": 5,
+	"Codigo": 155,
+	"Publicado": false,
+	"FechaDeCreacion": "2021"
+},
+{
+    "Id": 6,
+	"Nombre": "N6",
+	"Precio": 56,
+	"Stock": 6,
+	"Codigo": 156,
+	"Publicado": false,
+	"FechaDeCreacion": "2021"
+}
+]
