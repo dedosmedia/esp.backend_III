@@ -6,7 +6,9 @@ use ./clase_4
 
 use ./clase_5
 
-use ./parcial-go
+use ./examen-parcial-go
 
 
 use ./clase_13
+
+use ./clase_14
